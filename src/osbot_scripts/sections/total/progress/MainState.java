@@ -1,0 +1,13 @@
+package osbot_scripts.sections.total.progress;
+
+public enum MainState {
+
+	
+	CREATE_CHARACTER_DESIGN,
+	TALK_TO_GIELINOR_GUIDE_ONE,
+	SURVIVAL_EXPERT,
+	COOKING_GUIDE_SECTION,
+	QUEST_SECTION,
+	MINING_SECTION,
+	COMBAT_SECTION
+}
