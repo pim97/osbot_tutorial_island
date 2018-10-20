@@ -15,6 +15,10 @@ public class GuilinorGuideSection extends TutorialSection {
 	@Override
 	public void onLoop() throws InterruptedException {
 		log(getProgress());
+		
+		if (pendingContinue()) {
+			selectContinue();
+		}
 
 		switch (getProgress()) {
 		case 0:
