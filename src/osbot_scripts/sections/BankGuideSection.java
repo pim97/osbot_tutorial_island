@@ -24,22 +24,18 @@ public class BankGuideSection extends TutorialSection {
 		switch (getProgress()) {
 		case 510:
 			Position bankingPosition = new Position(3121, 3123, 0);
-			getWalking().walk(bankingPosition);
+			clickObject(10083, "Use", bankingPosition);
 
 			Sleep.sleepUntil(myPlayer().getArea(5).contains(bankingPosition), 10000, 3000);
 
-			if (getDialogues().isPendingContinuation()) {
-				if (pendingContinue()) {
-					selectContinue();
-				}
+			if (pendingContinue()) {
+				selectContinue();
 			} else if (getWidgets().containingText("Yes.") != null) {
 				if (getDialogues().selectOption(1)) {
 					Sleep.sleepUntil(getBank().isOpen(), 3500, 1000);
 					if (getBank().close()) {
 					}
 				}
-			} else {
-				clickObject(10083, "Use");
 			}
 			break;
 
