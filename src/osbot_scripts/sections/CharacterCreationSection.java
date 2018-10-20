@@ -38,7 +38,7 @@ public class CharacterCreationSection extends TutorialSection {
 	 */
 	@Override
     public final void onLoop() throws InterruptedException {
-		if (!isCompleted()) {
+		if (!isCompleted() && getProgress() <= 0) {
 			createCharacterDesign();
 			log("Not yet completed");
 		} else {

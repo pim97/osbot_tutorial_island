@@ -1,5 +1,6 @@
 package osbot_scripts.sections;
 
+import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TutorialScript;
@@ -38,7 +39,7 @@ public class GuilinorGuideSection extends TutorialSection {
 			break;
 
 		case 10:
-			clickObject(9398, "Open");
+			clickObject(9398, "Open", new Position(3097, 3107, 0));
 			Sleep.sleepUntil(!myPlayer().isMoving(), 3000, 1000);
 			break;
 
