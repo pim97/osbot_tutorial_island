@@ -13,6 +13,7 @@ public enum CombatGuideSectionProgress {
 	ATTACK_WITH_RAT_SWORD,
 	CLICK_GATE_BACK_TO_INSTRUCTOR,
 	ATTACK_RAT,
+	GO_UP_LADDER,
 	
 	
 	

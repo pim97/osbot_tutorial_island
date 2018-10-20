@@ -1,12 +1,14 @@
 package osbot_scripts.sections;
 
 import org.osbot.rs07.api.map.Area;
+import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.Item;
 import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.api.ui.EquipmentSlot;
 import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
+import osbot_scripts.TestScript;
 import osbot_scripts.sections.progress.CombatGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
@@ -20,62 +22,50 @@ public class CombatGuideSection extends TutorialSection {
 		// TODO Auto-generated constructor stub
 	}
 
-	private boolean overwrite = false;
+	private Position instructorPosition = new Position(3107, 9510, 0);
 
 	@Override
 	public void onLoop() throws InterruptedException {
 		// TODO Auto-generated method stub
+		log(progress);
+		log(getProgress());
 
-		if (!overwrite) {
-			if (getWidgets().containingText("Now you have a bow and some arrows") != null) {
-				progress = CombatGuideSectionProgress.ATTACK_RAT;
-			} else if (getWidgets().containingText("Pass through the gate") != null) {
-				progress = CombatGuideSectionProgress.CLICK_GATE_BACK_TO_INSTRUCTOR;
-			} else if (getWidgets().containingText("To attack the rat, right click it") != null) {
-				progress = CombatGuideSectionProgress.ATTACK_WITH_RAT_SWORD;
-			} else if (getWidgets().containingText("This is your combat interface") != null) {
-				progress = CombatGuideSectionProgress.WALK_TO_GATE_WITH_MOUSE;
-			} else if (getWidgets().containingText("Click on the flashing crossed") != null) {
-				progress = CombatGuideSectionProgress.OPEN_COMBAT_TAB;
-			} else if (getWidgets().containingText("After you've unequipped your dagger") != null) {
-				progress = CombatGuideSectionProgress.EQUIP_SWORD_AND_SHIELD;
-			} else if (getWidgets().containingText("You're now holding your dagger") != null) {
-				progress = CombatGuideSectionProgress.TALK_INSTRUCTOR_ABOUT_DAGGER;
-			} else if (getWidgets().containingText("You can see what items you are weaning") != null) {
-				progress = CombatGuideSectionProgress.EQUIP_DAGGER;
-			} else if (getWidgets().containingText("This is your worn inventory") != null) {
-				progress = CombatGuideSectionProgress.OPEN_EQUIPMENT_STATS;
-			} else if (getWidgets().containingText("You now have access to a new interface") != null) {
-				progress = CombatGuideSectionProgress.OPEN_EQUIPMENT_TAB;
+		switch (getProgress()) {
+		case 370:
+			if (!myPlayer().getArea(5).contains(getInstructorPosition())) {
+				getWalking().walk(getInstructorPosition());
+			} else {
+				talkAndContinueWithInstructor();
 			}
-		}
+			progress = CombatGuideSectionProgress.TALK_WITH_INSTRUCTOR;
+			break;
 
-		if (progress == CombatGuideSectionProgress.TALK_WITH_INSTRUCTOR) {
-			talkAndContinueWithInstructor();
-		} else if (progress == CombatGuideSectionProgress.OPEN_EQUIPMENT_TAB) {
+		case 390:
 			if (getTabs().open(Tab.EQUIPMENT)) {
 				progress = CombatGuideSectionProgress.OPEN_EQUIPMENT_STATS;
 			}
-		} else if (progress == CombatGuideSectionProgress.OPEN_EQUIPMENT_STATS) {
+			break;
+
+		case 400:
 			RS2Widget statsWidget = getWidgets().get(387, 18);
 			if (statsWidget != null) {
 				if (statsWidget.interact()) {
 					progress = CombatGuideSectionProgress.EQUIP_DAGGER;
-					setOverwriteFalse();
 				}
 			} else {
 				getTabs().open(Tab.EQUIPMENT);
 			}
-		} else if (progress == CombatGuideSectionProgress.EQUIP_DAGGER) {
+			break;
+
+		case 405:
 			Item dagger = getInventory().getItem(1205);
 			if (dagger != null) {
 				if (equipmentInterfaceOpen() == null) {
 					progress = CombatGuideSectionProgress.OPEN_EQUIPMENT_TAB;
-					overwrite = true;
 				} else {
 					if (closeEquipmentInterface() != null) {
 						if (dagger.interact()) {
-							if (closeEquipmentInterface().interact()) {
+							if (closeEquipmentInterface() != null && closeEquipmentInterface().interact()) {
 								progress = CombatGuideSectionProgress.TALK_INSTRUCTOR_ABOUT_DAGGER;
 							}
 						}
@@ -84,33 +74,45 @@ public class CombatGuideSection extends TutorialSection {
 			} else {
 				log("DAGGER NULL!");
 			}
-		} else if (progress == CombatGuideSectionProgress.TALK_INSTRUCTOR_ABOUT_DAGGER) {
+			break;
+
+		case 410:
 			talkAndContinueWithInstructor();
-		} else if (progress == CombatGuideSectionProgress.EQUIP_SWORD_AND_SHIELD) {
+			break;
+
+		case 420:
 			Item swordAndShield = getInventory().getItem(1277, 1171);
 			if (swordAndShield != null) {
 				swordAndShield.interact();
 			}
-		} else if (progress == CombatGuideSectionProgress.OPEN_COMBAT_TAB) {
-			if (getTabs().open(Tab.ATTACK)) {
-				progress = CombatGuideSectionProgress.WALK_TO_GATE_WITH_MOUSE;
-			}
-		} else if (progress == CombatGuideSectionProgress.WALK_TO_GATE_WITH_MOUSE) {
-			clickObject(9720, "Open");
-		} else if (progress == CombatGuideSectionProgress.ATTACK_WITH_RAT_SWORD) {
+			break;
+
+		case 430:
+			getTabs().open(Tab.ATTACK);
+			break;
+
+		case 440:
+			walkInto();
+			break;
+
+		case 450:
+			walkInto();
 			if (attackRat()) {
 				Sleep.sleepUntil(!myPlayer().isUnderAttack() && myPlayer().isAttackable(), 10000, 3000);
 			}
-		} else if (progress == CombatGuideSectionProgress.CLICK_GATE_BACK_TO_INSTRUCTOR) {
-			if (new Area(new int[][] { { 3101, 9510 }, { 3104, 9510 }, { 3105, 9510 }, { 3107, 9512 }, { 3107, 9513 },
-					{ 3108, 9514 }, { 3109, 9514 }, { 3110, 9515 }, { 3110, 9517 }, { 3111, 9518 }, { 3111, 9520 },
-					{ 3110, 9521 }, { 3110, 9522 }, { 3109, 9523 }, { 3107, 9523 }, { 3105, 9525 }, { 3104, 9525 },
-					{ 3103, 9526 }, { 3101, 9526 }, { 3093, 9525 }, { 3092, 9510 } })
-							.contains(getPlayers().myPosition())) {
-				clickObject(9719, "Open");
+			break;
+
+		case 470:
+			walkOut();
+			if (!myPlayer().getArea(5).contains(getInstructorPosition())) {
+				getWalking().walk(getInstructorPosition());
+			} else {
+				talkAndContinueWithInstructor();
 			}
-			talkAndContinueWithInstructor();
-		} else if (progress == CombatGuideSectionProgress.ATTACK_RAT) {
+			break;
+
+		case 490:
+		case 480:
 			if (getTabs().open(Tab.INVENTORY)) {
 				if (!getEquipment().isWearingItem(EquipmentSlot.WEAPON, "Shortbow")) {
 					wieldItem("Shortbow");
@@ -118,9 +120,41 @@ public class CombatGuideSection extends TutorialSection {
 					wieldItem("Bronze arrow");
 				}
 				if (attackRat()) {
-					Sleep.sleepUntil(!myPlayer().isUnderAttack() && myPlayer().isAttackable(), 10000, 3000);
+					Sleep.sleepUntil(!myPlayer().isUnderAttack() && myPlayer().isAttackable(), 25000, 3000);
 				}
 			}
+			break;
+
+		case 500:
+			clickObject(9727, "Climb-up", new Position(3111, 9525, 0));
+			break;
+
+		case 510:
+			TestScript.mainState = getNextMainState();
+			break;
+		}
+
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private void walkInto() {
+		if (!new Area(new int[][] { { 3101, 9510 }, { 3104, 9510 }, { 3105, 9510 }, { 3107, 9512 }, { 3107, 9513 },
+				{ 3108, 9514 }, { 3109, 9514 }, { 3110, 9515 }, { 3110, 9517 }, { 3111, 9518 }, { 3111, 9520 },
+				{ 3110, 9521 }, { 3110, 9522 }, { 3109, 9523 }, { 3107, 9523 }, { 3105, 9525 }, { 3104, 9525 },
+				{ 3103, 9526 }, { 3101, 9526 }, { 3093, 9525 }, { 3092, 9510 } }).contains(getPlayers().myPosition())) {
+			clickObject(9720, "Open", new Position(3111, 9519, 0));
+		}
+	}
+
+	private void walkOut() {
+		if (new Area(new int[][] { { 3101, 9510 }, { 3104, 9510 }, { 3105, 9510 }, { 3107, 9512 }, { 3107, 9513 },
+				{ 3108, 9514 }, { 3109, 9514 }, { 3110, 9515 }, { 3110, 9517 }, { 3111, 9518 }, { 3111, 9520 },
+				{ 3110, 9521 }, { 3110, 9522 }, { 3109, 9523 }, { 3107, 9523 }, { 3105, 9525 }, { 3104, 9525 },
+				{ 3103, 9526 }, { 3101, 9526 }, { 3093, 9525 }, { 3092, 9510 } }).contains(getPlayers().myPosition())) {
+			clickObject(9719, "Open");
 		}
 	}
 
@@ -151,15 +185,6 @@ public class CombatGuideSection extends TutorialSection {
 
 	/**
 	 * 
-	 */
-	private void setOverwriteFalse() {
-		if (overwrite) {
-			overwrite = false;
-		}
-	}
-
-	/**
-	 * 
 	 * @return
 	 */
 	private RS2Widget closeEquipmentInterface() {
@@ -185,7 +210,22 @@ public class CombatGuideSection extends TutorialSection {
 	@Override
 	public MainState getNextMainState() {
 		// TODO Auto-generated method stub
-		return null;
+		return MainState.BANKING_AREA_SECTION;
+	}
+
+	/**
+	 * @return the instructorPosition
+	 */
+	public Position getInstructorPosition() {
+		return instructorPosition;
+	}
+
+	/**
+	 * @param instructorPosition
+	 *            the instructorPosition to set
+	 */
+	public void setInstructorPosition(Position instructorPosition) {
+		this.instructorPosition = instructorPosition;
 	}
 
 }

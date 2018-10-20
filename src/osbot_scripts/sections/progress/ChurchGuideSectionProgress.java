@@ -1,0 +1,15 @@
+package osbot_scripts.sections.progress;
+
+public enum ChurchGuideSectionProgress {
+
+	CLICK_DOOR_IF_CLOSED,
+	TALK_WITH_INSTRUCTOR_ONE,
+	CLICK_PRAYER_TAB,
+	TALK_WITH_INSTRUCTOR_TWO,
+	CLICK_FRIENDS_LIST,
+	TALK_WITH_INSTRUCTOR_THREE,
+	CLICK_DOOR_LAST_SECTION,
+	WALK_TO_WIZARD_HOUSE,
+	
+	
+}

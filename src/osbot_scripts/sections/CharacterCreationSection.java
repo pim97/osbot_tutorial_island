@@ -61,11 +61,7 @@ public class CharacterCreationSection extends TutorialSection {
 	 */
 	@Override
 	public boolean isCompleted() {
-		if (getWidgets().getWidgetContainingText("Tutorial Island Progress") == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return getProgress() == 0 && getWidgets().get(269, 96) == null ? true : false;
 	}
 	
 	/**

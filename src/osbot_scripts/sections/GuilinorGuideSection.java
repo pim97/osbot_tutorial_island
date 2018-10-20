@@ -21,26 +21,23 @@ public class GuilinorGuideSection extends TutorialSection {
 		log(progress);
 
 		// Otherwise can be stuck
-		if (getWidgets().getWidgetContainingText("Player controls") != null) {
+		if (getWidgets().getWidgetContainingText("Please click on the flashing spanner icon") != null) {
 			progress = GuilinorGuideSectionProgress.CLIKING_WRENCH;
 		} else if (getWidgets().getWidgetContainingText("On the side panel, you can now see") != null) {
 			progress = GuilinorGuideSectionProgress.TALKING_TWO;
 		} else if (getWidgets().getWidgetContainingText("You can interact with many items of scenery") != null) {
 			progress = GuilinorGuideSectionProgress.CLICKING_DOOR;
-		} else if (isCompleted()) {
+		} else if (getWidgets().getWidgetContainingText("Follow the path to find the next") != null) {
 			TestScript.mainState = getNextMainState();
 		}
 
 		if (progress == GuilinorGuideSectionProgress.TALKING_ONE) {
 			// Not talking with constructor? then go talk
-			if (!pendingContinue()) {
-				talkToConstructor();
-
-				// Has dialogue option?
-			} else if (getWidgets()
-					.getWidgetContainingText("What's your experience with Old School Runescape?") != null) {
+			if (getWidgets().getWidgetContainingText("What's your experience with Old School Runescape?") != null) {
 				getDialogues().selectOption(random(1, 3));
 				progress = GuilinorGuideSectionProgress.CLIKING_WRENCH;
+			} else if (!pendingContinue()) {
+				talkToConstructor();
 
 				// Select to continue if can continue
 			} else if (pendingContinue()) {
@@ -63,7 +60,7 @@ public class GuilinorGuideSection extends TutorialSection {
 			}
 		} else if (progress == GuilinorGuideSectionProgress.CLICKING_DOOR) {
 			RS2Object doorObject = getObjects().closest("Door");
-			
+
 			if (doorObject != null && doorObject.interact("Open")) {
 				Sleep.sleepUntil(!myPlayer().isMoving(), 3000, 1000);
 			}
@@ -72,11 +69,7 @@ public class GuilinorGuideSection extends TutorialSection {
 
 	@Override
 	public boolean isCompleted() {
-		// TODO Auto-generated method stub
-		if (getWidgets().containingText("Talk to the Survival Expert by the pond") != null) {
-			return true;
-		}
-		return false;
+		return getProgress() > 0 ? true : false;
 	}
 
 	@Override

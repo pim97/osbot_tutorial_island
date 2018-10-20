@@ -3,13 +3,26 @@ package osbot_scripts.sections.decide;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.script.MethodProvider;
 
+import osbot_scripts.TestScript;
 import osbot_scripts.sections.total.progress.MainState;
 
 public class CheckInWhatArea {
 
 	public static MainState getState(MethodProvider prov) {
-		if (new Area(new int[][] { { 3095, 9504 }, { 3095, 9493 }, { 3125, 9493 }, { 3122, 9539 }, { 3095, 9536 } })
-				.contains(prov.myPlayer())) {
+		if (new Area(new int[][] { { 3138, 3103 }, { 3107, 3103 }, { 3107, 3074 }, { 3151, 3074 }, { 3150, 3103 } })
+				.contains(prov.myPosition())) {
+			return MainState.WIZARD_GUIDE_SECTION;
+		} else if (new Area(new int[][] { { 3130, 3126 }, { 3130, 3110 }, { 3129, 3111 }, { 3114, 3111 },
+				{ 3114, 3102 }, { 3114, 3103 }, { 3130, 3102 }, { 3139, 3103 }, { 3139, 3126 } })
+						.contains(prov.myPlayer())) {
+			return MainState.CHURCH_GUIDE_SECTION;
+		} else if (new Area(new int[][] { { 3107, 3129 }, { 3107, 3111 }, { 3128, 3111 }, { 3131, 3115 },
+				{ 3132, 3120 }, { 3132, 3123 }, { 3130, 3123 }, { 3130, 3126 }, { 3128, 3126 }, { 3128, 3128 },
+				{ 3126, 3128 }, { 3126, 3130 }, { 3122, 3130 }, { 3107, 3130 } }).contains(prov.myPlayer())) {
+			return MainState.BANKING_AREA_SECTION;
+		} else if (new Area(
+				new int[][] { { 3095, 9504 }, { 3095, 9493 }, { 3125, 9493 }, { 3122, 9539 }, { 3095, 9536 } })
+						.contains(prov.myPlayer())) {
 			return MainState.COMBAT_SECTION;
 		} else if (new Area(new int[][] { { 3088, 9526 }, { 3082, 9522 }, { 3076, 9517 }, { 3076, 9514 },
 				{ 3078, 9511 }, { 3074, 9508 }, { 3071, 9508 }, { 3071, 9493 }, { 3095, 9493 }, { 3095, 9512 },

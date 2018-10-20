@@ -44,6 +44,32 @@ public abstract class TutorialSection extends MethodProvider {
 	}
 	
 	/**
+	 * Gets current progress
+	 * @return
+	 */
+	protected final int getProgress() {
+        return getConfigs().get(281);
+    }
+	
+	/**
+	 * Clicking an object
+	 * 
+	 * @param objectId
+	 * @param interactName
+	 */
+	public void clickObject(int objectId, String interactName, Position walkTo) {
+		RS2Object rs2Object = getObjects().closest(objectId);
+		if (rs2Object != null && rs2Object.isVisible()) {
+			rs2Object.interact(interactName);
+			Sleep.sleepUntil(myPlayer().getArea(2).contains(rs2Object.getPosition()), 10000, 2000);
+		} else if (rs2Object != null && !rs2Object.isVisible()) {
+			getWalking().walk(walkTo);
+		} else if (rs2Object == null) {
+			getWalking().walk(walkTo);
+		}
+	}
+	
+	/**
 	 * 
 	 */
 	public void talkAndContinueWithInstructor() {
