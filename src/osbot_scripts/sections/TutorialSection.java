@@ -72,6 +72,8 @@ public abstract class TutorialSection extends MethodProvider {
 	 * 
 	 */
 	public void talkAndContinueWithInstructor() {
+		enableRunning();
+		
 		if (!pendingContinue()) {
 			talkToConstructor();
 			// Select to continue if can continue
@@ -160,6 +162,15 @@ public abstract class TutorialSection extends MethodProvider {
 		if (getInstructor() != null) {
 			getInstructor().interact("Talk-to");
 			Sleep.sleepUntil(pendingContinue(), 5000, 3000);
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	protected void enableRunning() {
+		if (getSettings().getRunEnergy() > 50 && !getSettings().isRunning()) {
+			getSettings().setRunning(true);
 		}
 	}
 

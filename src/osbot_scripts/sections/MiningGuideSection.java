@@ -33,11 +33,11 @@ public class MiningGuideSection extends TutorialSection {
 			break;
 			
 		case 270:
-			clickObject(10080, "Prospect");
+			clickObject(10080, "Prospect", new Position(3076, 9502, 0));
 			break;
 			
 		case 280:
-			clickObject(10079, "Prospect");
+			clickObject(10079, "Prospect", new Position(3084, 9502, 0));
 			break;
 			
 		case 290:
@@ -61,7 +61,7 @@ public class MiningGuideSection extends TutorialSection {
 				Item copperOre = getInventory().getItem(436);
 				if (copperOre != null) {
 					if (tinOre.interact()) {
-						clickObject(10082, "Use");
+						clickObject(10082, "Use", new Position(3079, 9498, 0));
 					}
 				} else {
 					mineCopper();
@@ -102,38 +102,11 @@ public class MiningGuideSection extends TutorialSection {
 		case 370:
 			TestScript.mainState = getNextMainState();
 			break;
-
-		default:
-			break;
 		}
 
 		if (pendingContinue()) {
 			selectContinue();
 		}
-
-//		if (!overwrite) {
-//			if (getWidgets().containingText("Go through the gate") != null) {
-//				progress = MiningGuildeSectionProgress.WALKING_TO_GATE;
-//			} else if (getWidgets().containingText("The smithing menu open") != null) {
-//				progress = MiningGuildeSectionProgress.CHOOSING_DAGGER_IN_INTERFACE;
-//			} else if (getWidgets().containingText("Smithing a dagger") != null) {
-//				progress = MiningGuildeSectionProgress.SMITHING_A_DAGGER;
-//			} else if (getWidgets().containingText("You've made a bronze bar") != null) {
-//				progress = MiningGuildeSectionProgress.TALK_WITH_INSTRUCTOR_ABOUT_SMELTING;
-//			} else if (getWidgets().containingText("both some copper and tin ore") != null) {
-//				progress = MiningGuildeSectionProgress.SMELTING;
-//			} else if (getWidgets().containingText("just need some copper ore") != null) {
-//				progress = MiningGuildeSectionProgress.MINING_COPPER;
-//			} else if (getWidgets().containingText("Mining") != null) {
-//				progress = MiningGuildeSectionProgress.MINING_TIN;
-//			} else if (getWidgets().containingText("It's copper") != null) {
-//				progress = MiningGuildeSectionProgress.TALK_WITH_INSTRUCTOR_ABOUT_TIN_AND_COPPER;
-//			} else if (getWidgets().containingText("So you know there's tin") != null) {
-//				progress = MiningGuildeSectionProgress.PROSPECTING_COPPER;
-//			} else if (getWidgets().containingText("Go prospect a mineable rock") != null) {
-//				progress = MiningGuildeSectionProgress.PROSPECTING_TIN;
-//			}
-//		}
 
 	
 	}
@@ -141,14 +114,14 @@ public class MiningGuideSection extends TutorialSection {
 	 * 
 	 */
 	private void mineCopper() {
-		clickObject(10079, "Mine");
+		clickObject(10079, "Mine", new Position(3084, 9502, 0));
 	}
 
 	/**
 	 * 
 	 */
 	private void mineTin() {
-		clickObject(10080, "Mine");
+		clickObject(10080, "Mine", new Position(3076, 9502, 0));
 	}
 
 	@Override

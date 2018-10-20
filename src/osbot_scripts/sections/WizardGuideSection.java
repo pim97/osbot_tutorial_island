@@ -35,6 +35,7 @@ public class WizardGuideSection extends TutorialSection {
 			break;
 			
 		case 640:
+		case 630:
 			if (getTabs().open(Tab.MAGIC)) {
 				talkAndContinueWithInstructor();
 			}

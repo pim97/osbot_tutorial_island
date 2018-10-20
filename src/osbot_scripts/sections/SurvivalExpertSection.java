@@ -22,15 +22,16 @@ public class SurvivalExpertSection extends TutorialSection {
 		super("Survival Expert");
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	private static final int RAW_SHRIMP = 2514;
-	
+
 	private static final int NORMAL_LOGS = 2511;
-	
+
 	private static final int COOKED_SHRIMP = 315;
-	
+
 	private static final int BURNED_SHRIMP = 7954;
-	
+
+	private static final int FIRE_OBJECT_ID = 26185;
 
 	@Override
 	public void onLoop() throws InterruptedException {
@@ -68,37 +69,33 @@ public class SurvivalExpertSection extends TutorialSection {
 			} else if (!getInventory().contains(NORMAL_LOGS)) {
 				chopTree();
 			} else if (getInventory().contains(RAW_SHRIMP, NORMAL_LOGS)) {
-				lightFire();
-				useShrimpOnFire();
+				if (!isFireInArea()) {
+					lightFire();
+				} else {
+					useShrimpOnFire();
+				}
 			} else if (getInventory().contains(BURNED_SHRIMP)) {
 				getInventory().dropAll(BURNED_SHRIMP);
-			} else if (getInventory().contains(COOKED_SHRIMP)) {
 			}
 			break;
 		case 120:
 			walkThroughGate();
 			break;
+			
+		case 130:
+			TestScript.mainState = getNextMainState();
+			break;
 		}
 
 	}
-	
+
 	/**
 	 * Walking throug the gate
 	 */
 	private void walkThroughGate() {
-		Position doorPosition = new Position(3091, 3092, 0);
-		getWalking().walk(doorPosition);
-
-		if (isInPosition(doorPosition)) {
-			RS2Object doorObject = getObjects().closest(9708, 9470);
-
-			if (doorObject != null && doorObject.isVisible()) {
-				doorObject.interact("Open");
-				TestScript.mainState = getNextMainState();
-			}
-		}
+		clickObject(9470, "Open", new Position(3091, 3092, 0));
 	}
-	
+
 	/**
 	 * Fish a fish
 	 */
@@ -123,7 +120,7 @@ public class SurvivalExpertSection extends TutorialSection {
 			Sleep.sleepUntil(myPlayer().getAnimation() == -1, 10000, 1000);
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -145,6 +142,18 @@ public class SurvivalExpertSection extends TutorialSection {
 	private boolean standingOnFire() {
 		return getObjects().singleFilter(getObjects().getAll(),
 				obj -> obj.getPosition().equals(myPosition()) && obj.getName().equals("Fire")) != null;
+	}
+
+	private boolean isFireInArea() {
+		List<Position> allPositions = myPlayer().getArea(10).getPositions();
+
+		for (RS2Object object : getObjects().getAll()) {
+			if (allPositions.contains(object.getPosition())
+					&& object.getId() == FIRE_OBJECT_ID) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Optional<Position> getEmptyPosition() {

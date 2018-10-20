@@ -112,7 +112,7 @@ public class CombatGuideSection extends TutorialSection {
 					wieldItem("Bronze arrow");
 				}
 				if (attackRat()) {
-					Sleep.sleepUntil(!myPlayer().isUnderAttack() && myPlayer().isAttackable(), 25000, 3000);
+					Sleep.sleepUntil(!myPlayer().isUnderAttack() && myPlayer().isAttackable(), 25000, 8000);
 				}
 			}
 			break;

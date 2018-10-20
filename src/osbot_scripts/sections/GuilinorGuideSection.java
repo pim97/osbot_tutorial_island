@@ -1,16 +1,12 @@
 package osbot_scripts.sections;
 
-import org.osbot.rs07.api.model.RS2Object;
-import org.osbot.rs07.api.ui.RS2Widget;
+import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.GuilinorGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class GuilinorGuideSection extends TutorialSection {
-
-	private GuilinorGuideSectionProgress progress = GuilinorGuideSectionProgress.TALKING_ONE;
 
 	public GuilinorGuideSection() {
 		super("Gielinor Guide");
@@ -18,53 +14,35 @@ public class GuilinorGuideSection extends TutorialSection {
 
 	@Override
 	public void onLoop() throws InterruptedException {
-		log(progress);
+		log(getProgress());
 
-		// Otherwise can be stuck
-		if (getWidgets().getWidgetContainingText("Please click on the flashing spanner icon") != null) {
-			progress = GuilinorGuideSectionProgress.CLIKING_WRENCH;
-		} else if (getWidgets().getWidgetContainingText("On the side panel, you can now see") != null) {
-			progress = GuilinorGuideSectionProgress.TALKING_TWO;
-		} else if (getWidgets().getWidgetContainingText("You can interact with many items of scenery") != null) {
-			progress = GuilinorGuideSectionProgress.CLICKING_DOOR;
-		} else if (getWidgets().getWidgetContainingText("Follow the path to find the next") != null) {
-			TestScript.mainState = getNextMainState();
-		}
-
-		if (progress == GuilinorGuideSectionProgress.TALKING_ONE) {
-			// Not talking with constructor? then go talk
+		switch (getProgress()) {
+		case 0:
 			if (getWidgets().getWidgetContainingText("What's your experience with Old School Runescape?") != null) {
 				getDialogues().selectOption(random(1, 3));
-				progress = GuilinorGuideSectionProgress.CLIKING_WRENCH;
-			} else if (!pendingContinue()) {
-				talkToConstructor();
+			} else {
+				talkAndContinueWithInstructor();
+			}
+			break;
 
-				// Select to continue if can continue
-			} else if (pendingContinue()) {
-				selectContinue();
-			}
+		case 3:
+			getTabs().open(Tab.SETTINGS);
+			break;
 
-		} else if (progress == GuilinorGuideSectionProgress.CLIKING_WRENCH) {
-			// At clicking wrench? Open it
-			RS2Widget settingsTab = getWidgets().get(548, 42);
-			if (settingsTab != null) {
-				settingsTab.interact("Options");
-				progress = GuilinorGuideSectionProgress.TALKING_TWO;
-			}
-		} else if (progress == GuilinorGuideSectionProgress.TALKING_TWO) {
-			if (!pendingContinue()) {
-				talkToConstructor();
-				// Select to continue if can continue
-			} else if (pendingContinue()) {
-				selectContinue();
-			}
-		} else if (progress == GuilinorGuideSectionProgress.CLICKING_DOOR) {
-			RS2Object doorObject = getObjects().closest("Door");
+		case 7:
+			talkAndContinueWithInstructor();
+			break;
 
-			if (doorObject != null && doorObject.interact("Open")) {
-				Sleep.sleepUntil(!myPlayer().isMoving(), 3000, 1000);
-			}
+		case 10:
+			clickObject(9398, "Open");
+			Sleep.sleepUntil(!myPlayer().isMoving(), 3000, 1000);
+			break;
+
+		case 20:
+			TestScript.mainState = getNextMainState();
+			break;
 		}
+
 	}
 
 	@Override
