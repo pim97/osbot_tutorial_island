@@ -3,9 +3,11 @@ package osbot_scripts;
 import java.awt.Graphics2D;
 
 import org.osbot.rs07.api.map.Area;
+import org.osbot.rs07.event.Event;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
+import osbot_scripts.events.ToggleRoofsHiddenEvent;
 import osbot_scripts.sections.BankGuideSection;
 import osbot_scripts.sections.CharacterCreationSection;
 import osbot_scripts.sections.ChurchGuideSection;
@@ -83,6 +85,12 @@ public class TutorialScript extends Script {
 	 */
 	@Override
 	public int onLoop() throws InterruptedException {
+		
+		if (!getSettings().areRoofsEnabled()) {
+		    Event toggleRoofsHiddenEvent = new ToggleRoofsHiddenEvent();
+		    execute(toggleRoofsHiddenEvent);
+		}
+		
 		if (new Area(new int[][] { { 3230, 3228 }, { 3242, 3228 }, { 3242, 3214 }, { 3230, 3214 } })
 				.contains(myPlayer().getPosition())) {
 			mainState = MainState.IN_LUMBRIDGE;
