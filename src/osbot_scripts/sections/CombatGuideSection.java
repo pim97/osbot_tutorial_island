@@ -9,13 +9,11 @@ import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.CombatGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class CombatGuideSection extends TutorialSection {
 
-	private CombatGuideSectionProgress progress = CombatGuideSectionProgress.TALK_WITH_INSTRUCTOR;
 
 	public CombatGuideSection() {
 		super("Combat Instructor");
@@ -27,7 +25,6 @@ public class CombatGuideSection extends TutorialSection {
 	@Override
 	public void onLoop() throws InterruptedException {
 		// TODO Auto-generated method stub
-		log(progress);
 		log(getProgress());
 
 		switch (getProgress()) {
@@ -37,12 +34,10 @@ public class CombatGuideSection extends TutorialSection {
 			} else {
 				talkAndContinueWithInstructor();
 			}
-			progress = CombatGuideSectionProgress.TALK_WITH_INSTRUCTOR;
 			break;
 
 		case 390:
 			if (getTabs().open(Tab.EQUIPMENT)) {
-				progress = CombatGuideSectionProgress.OPEN_EQUIPMENT_STATS;
 			}
 			break;
 
@@ -50,7 +45,6 @@ public class CombatGuideSection extends TutorialSection {
 			RS2Widget statsWidget = getWidgets().get(387, 18);
 			if (statsWidget != null) {
 				if (statsWidget.interact()) {
-					progress = CombatGuideSectionProgress.EQUIP_DAGGER;
 				}
 			} else {
 				getTabs().open(Tab.EQUIPMENT);
@@ -61,12 +55,10 @@ public class CombatGuideSection extends TutorialSection {
 			Item dagger = getInventory().getItem(1205);
 			if (dagger != null) {
 				if (equipmentInterfaceOpen() == null) {
-					progress = CombatGuideSectionProgress.OPEN_EQUIPMENT_TAB;
 				} else {
 					if (closeEquipmentInterface() != null) {
 						if (dagger.interact()) {
 							if (closeEquipmentInterface() != null && closeEquipmentInterface().interact()) {
-								progress = CombatGuideSectionProgress.TALK_INSTRUCTOR_ABOUT_DAGGER;
 							}
 						}
 					}

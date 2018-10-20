@@ -4,12 +4,9 @@ import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.ChurchGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 
 public class ChurchGuideSection extends TutorialSection {
-
-	ChurchGuideSectionProgress progress = ChurchGuideSectionProgress.CLICK_DOOR_IF_CLOSED;
 
 	public ChurchGuideSection() {
 		super("Brother Brace");
@@ -19,7 +16,6 @@ public class ChurchGuideSection extends TutorialSection {
 	@Override
 	public void onLoop() throws InterruptedException {
 		// TODO Auto-generated method stub
-		log(progress);
 		log(getProgress());
 
 		switch (getProgress()) {

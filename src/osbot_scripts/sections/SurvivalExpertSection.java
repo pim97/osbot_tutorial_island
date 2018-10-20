@@ -13,13 +13,10 @@ import org.osbot.rs07.api.ui.Tab;
 import org.osbot.rs07.event.WalkingEvent;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.SurvivalExpertSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class SurvivalExpertSection extends TutorialSection {
-
-	private SurvivalExpertSectionProgress progress = SurvivalExpertSectionProgress.TALKING_ONE;
 
 	public SurvivalExpertSection() {
 		super("Survival Expert");
@@ -37,46 +34,36 @@ public class SurvivalExpertSection extends TutorialSection {
 
 	@Override
 	public void onLoop() throws InterruptedException {
-		log(progress);
 		log(getProgress());
 
 		switch (getProgress()) {
 		case 20:
-			progress = SurvivalExpertSectionProgress.TALKING_ONE;
 			talkAndContinueWithInstructor();
 			break;
 		case 30:
 			talkAndContinueWithInstructor();
 			Sleep.sleepUntil(getTabs().open(Tab.INVENTORY), 10000, 1000);
-			progress = SurvivalExpertSectionProgress.CLICK_INVENTORY;
 			break;
 		case 40:
-			progress = SurvivalExpertSectionProgress.CUTTING_LOGS;
 			chopTree();
 			break;
 		case 50:
-			progress = SurvivalExpertSectionProgress.MAKING_FIRE;
 			lightFire();
 			break;
 		case 60:
-			progress = SurvivalExpertSectionProgress.OPEN_SKILLS_TAB;
 			Sleep.sleepUntil(getTabs().open(Tab.SKILLS), 10000, 1000);
 			break;
 		case 70:
-			progress = SurvivalExpertSectionProgress.TALKING_TWO;
 			talkAndContinueWithInstructor();
 			break;
 		case 80:
-			progress = SurvivalExpertSectionProgress.FISHING_FISH;
 			fish();
 			break;
 		case 90:
 		case 110:
-			progress = SurvivalExpertSectionProgress.COOKING_SHRIMP;
 			Sleep.sleepUntil(getTabs().open(Tab.INVENTORY), 1000, 1000);
 
 			if (!getInventory().contains(RAW_SHRIMP)) {
-				progress = SurvivalExpertSectionProgress.FISHING_FISH;
 				fish();
 			} else if (!getInventory().contains(NORMAL_LOGS)) {
 				chopTree();
@@ -86,11 +73,9 @@ public class SurvivalExpertSection extends TutorialSection {
 			} else if (getInventory().contains(BURNED_SHRIMP)) {
 				getInventory().dropAll(BURNED_SHRIMP);
 			} else if (getInventory().contains(COOKED_SHRIMP)) {
-				progress = SurvivalExpertSectionProgress.END_SECTION_GATE;
 			}
 			break;
 		case 120:
-			progress = SurvivalExpertSectionProgress.END_SECTION_GATE;
 			walkThroughGate();
 			break;
 		}
@@ -122,9 +107,6 @@ public class SurvivalExpertSection extends TutorialSection {
 		log("fishspot" + fishingSpot);
 		if (fishingSpot != null && fishingSpot.isVisible()) {
 			if (fishingSpot.interact("Net")) {
-
-				progress = SurvivalExpertSectionProgress.COOKING_SHRIMP;
-
 				Sleep.sleepUntil(!myPlayer().isMoving() && myPlayer().getAnimation() == -1, 10000, 5000);
 			}
 		}

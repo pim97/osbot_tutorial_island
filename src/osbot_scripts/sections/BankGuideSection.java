@@ -5,13 +5,10 @@ import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.BankGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class BankGuideSection extends TutorialSection {
-
-	BankGuideSectionProgress progress = BankGuideSectionProgress.WALK_TO_BANKING_AREA;
 
 	public BankGuideSection() {
 		super("Account Guide");
@@ -21,7 +18,6 @@ public class BankGuideSection extends TutorialSection {
 	@Override
 	public void onLoop() throws InterruptedException {
 		// TODO Auto-generated method stub
-		log(progress);
 		log(getProgress());
 		
 		switch (getProgress()) {
@@ -53,7 +49,6 @@ public class BankGuideSection extends TutorialSection {
 				RS2Widget pollWidget = getWidgets().get(345, 2, 11);
 				if (pollWidget != null) {
 					if (pollWidget.interact()) {
-						progress = BankGuideSectionProgress.OPEN_DOOR;
 					}
 				}
 			} else {
@@ -63,7 +58,6 @@ public class BankGuideSection extends TutorialSection {
 			
 		case 525:
 			clickObject(9721, "Open");
-			progress = BankGuideSectionProgress.TALK_TO_ADVISOR;
 			break;
 			
 		case 530:
@@ -72,7 +66,6 @@ public class BankGuideSection extends TutorialSection {
 			
 		case 531:
 			if (getTabs().open(Tab.IGNORES)) {
-				progress = BankGuideSectionProgress.TALK_TO_ADVISOR_ABOUT_AM;
 			}
 			break;
 			
@@ -83,7 +76,6 @@ public class BankGuideSection extends TutorialSection {
 		case 540:
 
 			clickObject(9722, "Open");
-			progress = BankGuideSectionProgress.OPEN_CHURCH_DOOR;
 			break;
 			
 		case 550:

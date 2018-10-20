@@ -5,13 +5,11 @@ import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.api.ui.Spells;
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.sections.progress.WizardGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class WizardGuideSection extends TutorialSection {
 
-	private WizardGuideSectionProgress progress = WizardGuideSectionProgress.WALK_TO_WIZARD_SECTION;
 
 	public WizardGuideSection() {
 		super("Magic Instructor");
@@ -21,7 +19,6 @@ public class WizardGuideSection extends TutorialSection {
 	@Override
 	public void onLoop() throws InterruptedException {
 		// TODO Auto-generated method stub
-		log(progress);
 		log(getProgress());
 		
 		switch (getProgress()) {
@@ -32,7 +29,6 @@ public class WizardGuideSection extends TutorialSection {
 			} else {
 				if (getWalking().walk(walkTo)) {
 					if (Sleep.sleepUntil(myPlayer().getArea(3).contains(walkTo), 10000, 3000)) {
-						progress = WizardGuideSectionProgress.TALK_WITH_INSTRUCTOR_ONE;
 					}
 				}
 			}
@@ -46,7 +42,6 @@ public class WizardGuideSection extends TutorialSection {
 			
 		case 650:
 			if (attackChicken()) {
-				progress = WizardGuideSectionProgress.TALK_WITH_INSTRUCTOR_TWO;
 			}
 			break;
 			

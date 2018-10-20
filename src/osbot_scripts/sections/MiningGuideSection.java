@@ -6,32 +6,25 @@ import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.MiningGuildeSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class MiningGuideSection extends TutorialSection {
-
-	MiningGuildeSectionProgress progress = MiningGuildeSectionProgress.WALK_TO_INSTRUCTOR;
 
 	public MiningGuideSection() {
 		super("Mining instructor");
 		// TODO Auto-generated constructor stub
 	}
 
-	private boolean overwrite = false;;
-
 	@Override
 	public void onLoop() throws InterruptedException {
 		log(getProgress());
-		log(progress);
 		
 		switch (getProgress()) {
 		case 260:
 			Position miningInstructorPosition = new Position(3080, 9506, 0);
 			if (miningInstructorPosition != null) {
 				if (getWalking().walk(miningInstructorPosition)) {
-					progress = MiningGuildeSectionProgress.TALK_WITH_INSTRUCTOR;
 				}
 			}
 			if (myPlayer().getArea(5).contains(miningInstructorPosition)) {
@@ -51,17 +44,14 @@ public class MiningGuideSection extends TutorialSection {
 			talkAndContinueWithInstructor();
 
 			if (getTabs().open(Tab.INVENTORY)) {
-				progress = MiningGuildeSectionProgress.TALK_WITH_INSTRUCTOR_ABOUT_TIN_AND_COPPER;
 			}
 			break;
 			
 		case 300:
 			mineTin();
-			progress = MiningGuildeSectionProgress.MINING_TIN;
 			break;
 			
 		case 310:
-			progress = MiningGuildeSectionProgress.MINING_COPPER;
 			mineCopper();
 			break;
 			
@@ -72,7 +62,6 @@ public class MiningGuideSection extends TutorialSection {
 				if (copperOre != null) {
 					if (tinOre.interact()) {
 						clickObject(10082, "Use");
-						progress = MiningGuildeSectionProgress.SMELTING;
 					}
 				} else {
 					mineCopper();
@@ -83,7 +72,6 @@ public class MiningGuideSection extends TutorialSection {
 			break;
 			
 		case 330:
-			progress = MiningGuildeSectionProgress.TALK_WITH_INSTRUCTOR_ABOUT_SMELTING;
 			talkAndContinueWithInstructor();
 			break;
 			

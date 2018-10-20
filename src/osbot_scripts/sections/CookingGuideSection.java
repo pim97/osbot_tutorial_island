@@ -10,13 +10,10 @@ import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
 import osbot_scripts.TestScript;
-import osbot_scripts.sections.progress.CookingGuideSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
 public class CookingGuideSection extends TutorialSection {
-
-	CookingGuideSectionProgress progress = CookingGuideSectionProgress.OPEN_DOOR;
 
 	public CookingGuideSection() {
 		super("Master Chef");
@@ -28,7 +25,6 @@ public class CookingGuideSection extends TutorialSection {
 		
 					if (doorObject != null && doorObject.isVisible()) {
 						if (doorObject.interact("Open")) {
-							progress = CookingGuideSectionProgress.TALK_TO_COOKING_GUIDE;
 							Sleep.sleepUntil(new Area(new int[][] { { 3078, 3089 }, { 3075, 3089 }, { 3075, 3086 },
 									{ 3079, 3086 }, { 3079, 3089 } }).contains(myPlayer().getPosition()), 10000, 5000);
 						}
@@ -46,7 +42,6 @@ public class CookingGuideSection extends TutorialSection {
 				bucketOfWater.interact("Use");
 				flour.interact("Use");
 				Sleep.sleepUntil(getInventory().contains(2307), 2000, 1000);
-				progress = CookingGuideSectionProgress.DOUGH_ON_RANGE;
 			}
 		}
 	}
@@ -56,7 +51,6 @@ public class CookingGuideSection extends TutorialSection {
 		if (fireRange != null && fireRange.isVisible()) {
 			fireRange.interact("Cook");
 			Sleep.sleepUntil(getInventory().contains(2309), 4000, 1000);
-			progress = CookingGuideSectionProgress.CLICKING_MUSIC_PLAYER;
 		} else if (fireRange != null && !fireRange.isVisible()) {
 			getWalking().walk(fireRange.getPosition());
 		}
@@ -72,7 +66,6 @@ public class CookingGuideSection extends TutorialSection {
 					if (!getSettings().isRunning()) {
 						getSettings().setRunning(true);
 						Sleep.sleepUntil(getSettings().isRunning(), 3000, 1000);
-						progress = CookingGuideSectionProgress.WALK_TO_DUNGEON;
 					}
 				}
 			}
@@ -94,46 +87,37 @@ public class CookingGuideSection extends TutorialSection {
 	
 	@Override
 	public void onLoop() throws InterruptedException {
-		log(progress);
 		log(getProgress());
 		
 		switch (getProgress()) {
 		case 130:
-			progress = CookingGuideSectionProgress.OPEN_DOOR;
 			openDoor();
 			break;
 			
 		case 140:
 			talkAndContinueWithInstructor();
-			progress = CookingGuideSectionProgress.TALK_TO_COOKING_GUIDE;
 			break;
 			
 		case 150:
 			makeDough();
-			progress = CookingGuideSectionProgress.MAKING_DOUGH;
 			break;
 			
 		case 160:
 			doughOnFire();
-			progress = CookingGuideSectionProgress.DOUGH_ON_RANGE;
 			break;
 			
 		case 170:
 			if (getTabs().open(Tab.MUSIC)) {
-				progress = CookingGuideSectionProgress.CLICKING_DOOR_TO_OUTSIDE;
 			}
-			progress = CookingGuideSectionProgress.CLICKING_MUSIC_PLAYER;
 			break;
 			
 		case 180:
 			clickObject(9710, "Open", new Position(3073, 3090, 0));
 			
-			progress = CookingGuideSectionProgress.CLICKING_DOOR_TO_OUTSIDE;
 			break;
 			
 		case 183:
 		case 187:
-			progress = CookingGuideSectionProgress.CLICKING_EMOTES;
 			clickingEmotes();
 			break;
 			
@@ -145,7 +129,6 @@ public class CookingGuideSection extends TutorialSection {
 			break;
 			
 		case 210:
-			progress = CookingGuideSectionProgress.WALK_TO_DUNGEON;
 			walkToDungeon();
 			break;
 			
