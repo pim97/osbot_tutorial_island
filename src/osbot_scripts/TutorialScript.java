@@ -7,7 +7,9 @@ import org.osbot.rs07.event.Event;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
+import osbot_scripts.events.DisableAudioEvent;
 import osbot_scripts.events.ToggleRoofsHiddenEvent;
+import osbot_scripts.events.ToggleShiftDropEvent;
 import osbot_scripts.sections.BankGuideSection;
 import osbot_scripts.sections.CharacterCreationSection;
 import osbot_scripts.sections.ChurchGuideSection;
@@ -24,6 +26,11 @@ import osbot_scripts.sections.total.progress.MainState;
 
 @ScriptManifest(author = "pim97@github & dormic@osbot", info = "test", logo = "", name = "test", version = 0)
 public class TutorialScript extends Script {
+
+	/**
+	 * Auto disabled or not
+	 */
+	private boolean isAudioDisabled;
 
 	/**
 	 * The current mainstate
@@ -85,18 +92,17 @@ public class TutorialScript extends Script {
 	 */
 	@Override
 	public int onLoop() throws InterruptedException {
-		
-		if (!getSettings().areRoofsEnabled()) {
-		    Event toggleRoofsHiddenEvent = new ToggleRoofsHiddenEvent();
-		    execute(toggleRoofsHiddenEvent);
+
+		if (mainState != MainState.CREATE_CHARACTER_DESIGN && mainState != MainState.TALK_TO_GIELINOR_GUIDE_ONE) {
+			executeAllEvents();
 		}
-		
+
 		if (new Area(new int[][] { { 3230, 3228 }, { 3242, 3228 }, { 3242, 3214 }, { 3230, 3214 } })
 				.contains(myPlayer().getPosition())) {
 			mainState = MainState.IN_LUMBRIDGE;
 			log("Succesfully completed!");
 		}
-		
+
 		log(mainState);
 
 		if (mainState == MainState.CREATE_CHARACTER_DESIGN) {
@@ -121,8 +127,14 @@ public class TutorialScript extends Script {
 			wizardGuideSection.onLoop();
 		} else if (mainState == MainState.IN_LUMBRIDGE) {
 			stop();
+			while (getClient().isLoggedIn()) {
+				getLogoutTab().logOut();
+				
+				Thread.sleep(5000);
+				log("Trying to logout...");
+			}
 		}
-		
+
 		return random(600, 1200);
 	}
 
@@ -157,10 +169,37 @@ public class TutorialScript extends Script {
 	}
 
 	/**
+	 * 
+	 */
+	private void executeAllEvents() {
+		if (!getSettings().areRoofsEnabled()) {
+			Event toggleRoofsHiddenEvent = new ToggleRoofsHiddenEvent();
+			execute(toggleRoofsHiddenEvent);
+		}
+		if (!isAudioDisabled) {
+			isAudioDisabled = disableAudio();
+		} else if (!getSettings().isShiftDropActive()) {
+			toggleShiftDrop();
+		}
+	}
+
+	/**
 	 * @return the guilinorGuideSection
 	 */
 	public TutorialSection getGuilinorGuideSection() {
 		return guilinorGuideSection;
+	}
+
+	private boolean disableAudio() {
+		Event disableAudioEvent = new DisableAudioEvent();
+		execute(disableAudioEvent);
+		return disableAudioEvent.hasFinished();
+	}
+
+	private boolean toggleShiftDrop() {
+		Event toggleShiftDrop = new ToggleShiftDropEvent();
+		execute(toggleShiftDrop);
+		return toggleShiftDrop.hasFinished();
 	}
 
 	/**
