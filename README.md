@@ -8,6 +8,7 @@ This will let you finish the tutorial island on the game Oldscool Runescape Isla
 * Completing all the instructors in the tutorial island
 * Will stop automatically once its finished at Lumbridge
 * You can start this at any section of the tutorial island, it will automatically detect where you are.
+* Disabling rooftops, music & enabling shift dropping
 
 ![alt text](https://i.gyazo.com/2edc451fd920fcc4ad1740db45de73e5.png)
 
