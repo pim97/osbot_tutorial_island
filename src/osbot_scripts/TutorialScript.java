@@ -20,7 +20,7 @@ import osbot_scripts.sections.WizardGuideSection;
 import osbot_scripts.sections.decide.CheckInWhatArea;
 import osbot_scripts.sections.total.progress.MainState;
 
-@ScriptManifest(author = "pim97@github", info = "test", logo = "", name = "test", version = 0)
+@ScriptManifest(author = "pim97@github & dormic@osbot", info = "test", logo = "", name = "test", version = 0)
 public class TutorialScript extends Script {
 
 	/**
