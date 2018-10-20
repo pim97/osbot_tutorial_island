@@ -146,7 +146,7 @@ public class CombatGuideSection extends TutorialSection {
 				{ 3108, 9514 }, { 3109, 9514 }, { 3110, 9515 }, { 3110, 9517 }, { 3111, 9518 }, { 3111, 9520 },
 				{ 3110, 9521 }, { 3110, 9522 }, { 3109, 9523 }, { 3107, 9523 }, { 3105, 9525 }, { 3104, 9525 },
 				{ 3103, 9526 }, { 3101, 9526 }, { 3093, 9525 }, { 3092, 9510 } }).contains(getPlayers().myPosition())) {
-			clickObject(9719, "Open");
+			clickObject(9719, "Open", new Position(3110, 9519, 0));
 		}
 	}
 

@@ -23,15 +23,13 @@ public class CookingGuideSection extends TutorialSection {
 	private void openDoor() {
 		RS2Object doorObject = getObjects().closest(9709);
 
-		if (doorObject != null && doorObject.isVisible()) {
+		if (doorObject != null) {
 			if (doorObject.interact("Open")) {
 				Sleep.sleepUntil(new Area(
 						new int[][] { { 3078, 3089 }, { 3075, 3089 }, { 3075, 3086 }, { 3079, 3086 }, { 3079, 3089 } })
 								.contains(myPlayer().getPosition()),
 						10000, 5000);
 			}
-		} else if (doorObject != null && !doorObject.isVisible()) {
-			getWalking().walk(doorObject.getPosition());
 		}
 	}
 
@@ -50,11 +48,9 @@ public class CookingGuideSection extends TutorialSection {
 
 	private void doughOnFire() {
 		RS2Object fireRange = getObjects().closest(9736);
-		if (fireRange != null && fireRange.isVisible()) {
+		if (fireRange != null) {
 			fireRange.interact("Cook");
 			Sleep.sleepUntil(getInventory().contains(2309), 4000, 1000);
-		} else if (fireRange != null && !fireRange.isVisible()) {
-			getWalking().walk(fireRange.getPosition());
 		}
 	}
 

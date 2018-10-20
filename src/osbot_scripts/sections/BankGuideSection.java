@@ -58,12 +58,12 @@ public class BankGuideSection extends TutorialSection {
 			} else if (getBank().isOpen()) {
 				getBank().close();
 			} else {
-				clickObject(26815, "Use");
+				clickObject(26815, "Use", new Position(3120, 3121, 0));
 			}
 			break;
 
 		case 525:
-			clickObject(9721, "Open");
+			clickObject(9721, "Open", new Position(3124, 3124, 0));
 			break;
 
 		case 530:

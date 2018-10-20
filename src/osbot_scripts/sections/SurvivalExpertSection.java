@@ -61,6 +61,7 @@ public class SurvivalExpertSection extends TutorialSection {
 			fish();
 			break;
 		case 90:
+		case 100:
 		case 110:
 			Sleep.sleepUntil(getTabs().open(Tab.INVENTORY), 1000, 1000);
 
@@ -102,7 +103,7 @@ public class SurvivalExpertSection extends TutorialSection {
 	private void fish() {
 		NPC fishingSpot = getNpcs().closest("Fishing spot");
 		log("fishspot" + fishingSpot);
-		if (fishingSpot != null && fishingSpot.isVisible()) {
+		if (fishingSpot != null) {
 			if (fishingSpot.interact("Net")) {
 				Sleep.sleepUntil(!myPlayer().isMoving() && myPlayer().getAnimation() == -1, 10000, 5000);
 			}
@@ -114,7 +115,7 @@ public class SurvivalExpertSection extends TutorialSection {
 	 */
 	private void chopTree() {
 		RS2Object tree = getObjects().closest(9730);
-		if (tree != null && tree.isVisible()) {
+		if (tree != null) {
 			tree.interact("Chop down");
 
 			Sleep.sleepUntil(myPlayer().getAnimation() == -1, 10000, 1000);
@@ -180,7 +181,7 @@ public class SurvivalExpertSection extends TutorialSection {
 		Item shrimp = getInventory().getItem("Raw shrimps");
 		if (shrimp != null) {
 			RS2Object fire = getObjects().closest("Fire");
-			if (fire != null && fire.isVisible()) {
+			if (fire != null) {
 				if (shrimp.interact("Use")) {
 					if (fire.interact("Use")) {
 

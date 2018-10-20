@@ -34,10 +34,10 @@ public abstract class TutorialSection extends MethodProvider {
 	 */
 	public void clickObject(int objectId, String interactName) {
 		RS2Object rs2Object = getObjects().closest(objectId);
-		if (rs2Object != null && rs2Object.isVisible()) {
+		if (rs2Object != null && rs2Object.getArea(10).contains(myPlayer().getPosition())) {
 			rs2Object.interact(interactName);
 			Sleep.sleepUntil(myPlayer().getArea(2).contains(rs2Object.getPosition()), 10000, 2000);
-		} else if (rs2Object != null && !rs2Object.isVisible()) {
+		} else if (rs2Object != null) {
 			getWalking().walk(rs2Object.getPosition());
 		}
 	}
@@ -58,12 +58,10 @@ public abstract class TutorialSection extends MethodProvider {
 	 */
 	public void clickObject(int objectId, String interactName, Position walkTo) {
 		RS2Object rs2Object = getObjects().closest(objectId);
-		if (rs2Object != null && rs2Object.isVisible()) {
+		if (rs2Object != null && rs2Object.getArea(10).contains(myPlayer().getPosition())) {
 			rs2Object.interact(interactName);
 			Sleep.sleepUntil(myPlayer().getArea(2).contains(rs2Object.getPosition()), 10000, 2000);
-		} else if (rs2Object != null && !rs2Object.isVisible()) {
-			getWalking().walk(walkTo);
-		} else if (rs2Object == null) {
+		} else if (rs2Object != null) {
 			getWalking().walk(walkTo);
 		}
 	}
