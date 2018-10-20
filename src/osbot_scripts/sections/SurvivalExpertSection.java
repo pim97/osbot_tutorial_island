@@ -12,7 +12,7 @@ import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.api.ui.Tab;
 import org.osbot.rs07.event.WalkingEvent;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
@@ -83,7 +83,7 @@ public class SurvivalExpertSection extends TutorialSection {
 			break;
 			
 		case 130:
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 		}
 

@@ -5,7 +5,7 @@ import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
@@ -80,7 +80,7 @@ public class BankGuideSection extends TutorialSection {
 
 		case 550:
 			clickObject(1521, "Open", new Position(3129, 3107, 0));
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 
 		}

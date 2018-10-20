@@ -5,7 +5,7 @@ import org.osbot.rs07.api.model.Item;
 import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
@@ -94,13 +94,13 @@ public class MiningGuideSection extends TutorialSection {
 				getWalking().walk(gatePosition);
 			} else {
 				clickObject(9718, "Open");
-				TestScript.mainState = getNextMainState();
+				TutorialScript.mainState = getNextMainState();
 			}
 			break;
 			
 
 		case 370:
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 		}
 

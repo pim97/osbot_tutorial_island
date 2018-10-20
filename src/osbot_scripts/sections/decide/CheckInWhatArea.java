@@ -3,7 +3,7 @@ package osbot_scripts.sections.decide;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.script.MethodProvider;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 
 public class CheckInWhatArea {

@@ -2,7 +2,7 @@ package osbot_scripts.sections;
 
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
@@ -43,7 +43,7 @@ public class GuilinorGuideSection extends TutorialSection {
 			break;
 
 		case 20:
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 		}
 

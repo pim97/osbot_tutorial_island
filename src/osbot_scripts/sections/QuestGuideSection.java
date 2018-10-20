@@ -2,7 +2,7 @@ package osbot_scripts.sections;
 
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 
 public class QuestGuideSection extends TutorialSection {
@@ -35,7 +35,7 @@ public class QuestGuideSection extends TutorialSection {
 			break;
 			
 		case 260:
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 		}
 

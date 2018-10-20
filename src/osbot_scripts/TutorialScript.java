@@ -20,8 +20,8 @@ import osbot_scripts.sections.WizardGuideSection;
 import osbot_scripts.sections.decide.CheckInWhatArea;
 import osbot_scripts.sections.total.progress.MainState;
 
-@ScriptManifest(author = "test", info = "test", logo = "", name = "test", version = 0)
-public class TestScript extends Script {
+@ScriptManifest(author = "pim97@github", info = "test", logo = "", name = "test", version = 0)
+public class TutorialScript extends Script {
 
 	/**
 	 * The current mainstate
@@ -130,11 +130,6 @@ public class TestScript extends Script {
 		getWizardGuideSection().exchangeContext(getBot());
 
 		mainState = CheckInWhatArea.getState(this);
-		if (getWidgets().getWidgetContainingText("flashing spanner icon") != null || 
-				getWidgets().getWidgetContainingText("On the side panel, you can now see") != null
-				|| getWidgets().getWidgetContainingText("You can interact with many items of scenery") != null) {
-			mainState = MainState.TALK_TO_GIELINOR_GUIDE_ONE;
-		}
 		log("Set state to: " + mainState);
 
 		// prevents script from skipping character customization

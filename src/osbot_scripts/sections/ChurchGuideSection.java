@@ -3,7 +3,7 @@ package osbot_scripts.sections;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 
 public class ChurchGuideSection extends TutorialSection {
@@ -48,7 +48,7 @@ public class ChurchGuideSection extends TutorialSection {
 		case 610:
 			clickObject(9723, "Open");
 
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 		}
 	}

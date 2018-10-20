@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.osbot.rs07.api.ui.RS2Widget;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.progress.CharacterCreationSectionProgress;
 import osbot_scripts.sections.total.progress.MainState;
 
@@ -42,7 +42,7 @@ public class CharacterCreationSection extends TutorialSection {
 			createCharacterDesign();
 			log("Not yet completed");
 		} else {
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			log("Section completed!");
 		}
 	}

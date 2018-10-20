@@ -8,7 +8,7 @@ import org.osbot.rs07.api.ui.EquipmentSlot;
 import org.osbot.rs07.api.ui.RS2Widget;
 import org.osbot.rs07.api.ui.Tab;
 
-import osbot_scripts.TestScript;
+import osbot_scripts.TutorialScript;
 import osbot_scripts.sections.total.progress.MainState;
 import osbot_scripts.util.Sleep;
 
@@ -122,7 +122,7 @@ public class CombatGuideSection extends TutorialSection {
 			break;
 
 		case 510:
-			TestScript.mainState = getNextMainState();
+			TutorialScript.mainState = getNextMainState();
 			break;
 		}
 
