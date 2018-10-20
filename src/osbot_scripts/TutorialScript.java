@@ -87,7 +87,6 @@ public class TutorialScript extends Script {
 				.contains(myPlayer().getPosition())) {
 			mainState = MainState.IN_LUMBRIDGE;
 			log("Succesfully completed!");
-			stop();
 		}
 		
 		log(mainState);
@@ -112,7 +111,10 @@ public class TutorialScript extends Script {
 			churchGuideSection.onLoop();
 		} else if (mainState == MainState.WIZARD_GUIDE_SECTION) {
 			wizardGuideSection.onLoop();
+		} else if (mainState == MainState.IN_LUMBRIDGE) {
+			stop();
 		}
+		
 		return random(600, 1200);
 	}
 
