@@ -3,6 +3,8 @@ A script written for the Oldschool Runescape Tutorial Island in the OSBot API ma
 
 This will let you finish the tutorial island on the game Oldscool Runescape Island in about 15 minutes made with the Osbot API found here: https://osbot.org/api/. You may use this script for whatever you want.
 
+This has not been updated to the updates to the tutorial island in October.
+
 ## Features
 * Creating a random appearance
 * Completing all the instructors in the tutorial island
